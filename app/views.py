@@ -7,11 +7,21 @@ from .forms import *
 def contact(request):
     ECFO = ContactForm()
     d = {'ECFO': ECFO}
-    if request.method =='POST':
+
+    if request.method == 'POST':
         LFDO = ContactForm(request.POST)
         if LFDO.is_valid():
-            return HttpResponse('Form is valid')
+            data = LFDO.cleaned_data
+            return HttpResponse(f"""
+                Name: {data['name']} <br>
+                Email: {data['email']} <br>
+                Age: {data['age']} <br>
+                Message: {data['message']}
+            """)
         else:
             return HttpResponse('Form is not valid')
-    return render(request, 'contact.html',d)
+
+    return render(request, 'contact.html', d)
+
+
         
